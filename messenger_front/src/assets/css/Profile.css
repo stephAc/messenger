@@ -1,0 +1,31 @@
+.profileInputDisabled {
+  background-color: inherit;
+  border: none;
+  margin-top: 10px;
+}
+
+.profileInputEnable {
+  background-color: #a8a1a1;
+  height: 40px;
+  border-radius: 5px;
+  color: black;
+  margin-top: 10px;
+  border: none;
+  box-shadow: 6px 6px 10px #827f7f inset;
+  text-align: center;
+}
+
+.profileButtonSave {
+  padding: 10px 20px 10px 20px;
+  margin-right: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.profileButtonCancel {
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  font-weight: bold;
+}

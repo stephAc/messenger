@@ -1,0 +1,15 @@
+.searchBar {
+  text-align: left;
+  border: none;
+  height: 40px;
+  width: 155px;
+  margin-right: 25px;
+  background-color: white;
+  border-bottom: 1px solid lightgray;
+  transition: all 0.2s ease-in-out;
+}
+
+.searchBar:focus {
+  flex-grow: 1;
+  border-bottom: 1px solid rgb(7, 122, 160);
+}

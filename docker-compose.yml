@@ -1,0 +1,45 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./messenger_frontend
+      dockerfile: dev.Dockerfile
+    command: /bin/bash -c "npm run start"
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+
+  backend:
+    build:
+      context: ./messenger_backend
+      dockerfile: dev.Dockerfile
+    ports:
+      - 4000:4000
+    command: /bin/bash -c "npm run dev"
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mongodb_seed
+
+  mongo:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - data-volume:/data/db
+
+  mongo_seed:
+    image: mongo
+    links:
+      - mongo
+    volumes:
+      - ./seeds:/seeds
+    command: /bin/bash -c "sleep 10;mongoimport --host mongo --db messenger --collection users --type json --file /seeds/users.json --jsonArray"
+    depends_on:
+      - mongo
+
+volumes:
+  data-volume:
