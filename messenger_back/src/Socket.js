@@ -253,27 +253,28 @@ export default class Socket {
           }
         }
       });
-
-      socket.on('disconnect', () => {
+      /**
+       * Disconnection by closing tab - signal to all contacts online
+       * @param {Request} user ID
+       * @param {Response} action : emit
+       */
+      socket.on('disconnect', async () => {
         console.log('user disconnected');
-        await User.findByIdAndUpdate(
-          {
-            socketID: socket.id,
-          },
-          { $set: { online: false } },
-          { new: true, useFindAndModify: false },
-        )
-          .select('contacts')
-          .populate({
-            path: 'contacts',
-            model: 'User',
-            select: 'online socketID',
-          });
+        // const user = await User.findOneAndUpdate(
+        //   { socketID: socket.id },
+        //   { $set: { online: false } },
+        //   { new: true, useFindAndModify: false },
+        // )
+        //   .select('contacts')
+        //   .populate({
+        //     path: 'contacts',
+        //     model: 'User',
+        //     select: 'online socketID',
+        //   });
+        //   user.contacts.map(
+        //     el => el.online && this._io.to(el.socketID).emit(events.RELOAD_DATA),
+        //   );
         console.log(socket.id);
-        userContacts.contacts.map(
-          el =>
-            el.online && this._io.to(el.socketID).emit(events.RELOAD_DATA),
-        );
       });
     });
   }

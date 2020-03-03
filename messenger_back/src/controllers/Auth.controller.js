@@ -6,6 +6,12 @@ import User from '../models/User.model';
 import { JWT_SECRET } from '../config/secret.config';
 
 export default class Auth {
+  /**
+   * Login user
+   * @param {Request} email - password
+   * @param {Response} err : 401 => Unautirized
+   * @param {Response} token - id - message
+   */
   static async login(req, res) {
     let status = 200;
     let body = {};
@@ -35,7 +41,12 @@ export default class Auth {
     }
     res.status(status).json(body);
   }
-
+  /**
+   * Create user
+   * @param {Request} username - email - password
+   * @param {Response} err : 400
+   * @param {Response} message
+   */
   static async create(req, res) {
     let status = 200;
     let body = {};

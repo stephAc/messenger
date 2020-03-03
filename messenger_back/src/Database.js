@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const DATABASE_URl = 'mongodb://localhost:27017/messenger';
+const DATABASE_URl = 'mongodb://mongo:27017/messenger';
 
 export default class Database {
   constructor() {
