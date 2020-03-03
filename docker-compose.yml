@@ -2,7 +2,7 @@ version: '3'
 services:
   frontend:
     build:
-      context: ./messenger_frontend
+      context: ./messenger_front
       dockerfile: dev.Dockerfile
     command: /bin/bash -c "npm run start"
     ports:
@@ -13,7 +13,7 @@ services:
 
   backend:
     build:
-      context: ./messenger_backend
+      context: ./messenger_back
       dockerfile: dev.Dockerfile
     ports:
       - 4000:4000
