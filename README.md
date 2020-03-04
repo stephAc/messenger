@@ -16,3 +16,11 @@ docker-compose logs -f <conteneur> (pour logger en temps)
 
 Utilisation :
 Ouvrir un Browser => https://localhost:3000
+
+compte utilisateurs
+root / root
+test1 / root
+test2 / root
+
+compte admin
+admin / root
