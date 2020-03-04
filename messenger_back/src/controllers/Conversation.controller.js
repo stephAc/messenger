@@ -3,6 +3,13 @@ import Conversation from '../models/Conversation.model';
 import mongoose from 'mongoose';
 
 export default class ConversationController {
+  /**
+   * Créer une conversation
+   * @param {Request} id des utilisateurs concernés
+   * @param {err} 400 - aucun utilisateur
+   * @param {err} 302 - la conversation existe déjà
+   * @param {Response} nouvelle conversation - message
+   */
   static async create(req, res) {
     let status = 200;
     let body = {};
@@ -14,7 +21,7 @@ export default class ConversationController {
       for (const id of req.body.ids) {
         let user = await User.findById({ _id: mongoose.Types.ObjectId(id) });
         if (!user) {
-          status = 401;
+          status = 400;
           message.push("User doesn't exist");
           throw { error: 'Conversation Creation', message };
         }
@@ -112,6 +119,12 @@ export default class ConversationController {
     }
     res.status(status).json(body);
   }
+  /**
+   * Trouver une conversation avec son id
+   * @param {Request} id de la conversation
+   * @param {err} 400 - aucune conversation
+   * @param {Response} conversation
+   */
   static async find(req, res) {
     let status = 200;
     let body = {};
@@ -122,7 +135,7 @@ export default class ConversationController {
         _id: mongoose.Types.ObjectId(req.params.id),
       });
       if (!conv) {
-        status = 404;
+        status = 400;
         message.push("Conv doesn't exist");
         throw { error: 'Conversation ', message };
       }

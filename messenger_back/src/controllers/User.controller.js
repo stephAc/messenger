@@ -2,6 +2,12 @@ import User from '../models/User.model';
 import mongoose from 'mongoose';
 
 export default class UserController {
+  /**
+   * Trouver un utilisateur avec son id
+   * @param {Request} id
+   * @param {err} 400 - aucun utilisateur
+   * @param {Response} user
+   */
   static async find(req, res) {
     let status = 200;
     let body = {};
@@ -32,7 +38,7 @@ export default class UserController {
           select: '-password',
         });
       if (!user) {
-        status = 401;
+        status = 400;
         throw { message: "User doesn't exist" };
       }
       user['password'] = undefined;
@@ -46,6 +52,15 @@ export default class UserController {
     }
     res.status(status).json(body);
   }
+  /**
+   * Récupérer tous les utilisateurs
+   * @param {Response} user[]
+   */
+  /**
+   * Récupérer tous les utilisateurs qui commencent par une certaine chaîne de caractères
+   * @param {Request} name: string
+   * @param {Response} user[]
+   */
   static async list(req, res) {
     let status = 200;
     let body = {};
@@ -69,7 +84,12 @@ export default class UserController {
     }
     res.status(status).json(body);
   }
-
+  /**
+   * Récupérer toutes les conversations d'un utilisateurs
+   * @param {Request} name: string
+   * @param {err} 400 - aucun utilisateur
+   * @param {Response} conversations[]
+   */
   static async getConversation(req, res) {
     let status = 200;
     let body = {};
@@ -88,7 +108,7 @@ export default class UserController {
         });
 
       if (!user) {
-        status = 401;
+        status = 400;
         throw { message: "User doesn't exist" };
       }
       body = user.conversationsRef;
@@ -101,6 +121,12 @@ export default class UserController {
     }
     res.status(status).json(body);
   }
+  /**
+   * Envoyer une demande d'ami
+   * @param {Request} id du demandeur - id du receveur
+   * @param {err} 400 - aucun utilisateur
+   * @param {Response} message
+   */
   static async requestTo(req, res) {
     let status = 200;
     let body = {};
@@ -111,7 +137,7 @@ export default class UserController {
       });
 
       if (!user) {
-        status = 401;
+        status = 400;
         throw { message: "User doesn't exist" };
       }
 
@@ -137,6 +163,12 @@ export default class UserController {
     }
     res.status(status).json(body);
   }
+  /**
+   * Refuser une demande d'ami
+   * @param {Request} id de l'utilisateur - id du contact refusé
+   * @param {err} 400 - aucun utilisateur
+   * @param {Response} message
+   */
   static async declineRequest(req, res) {
     let status = 200;
     let body = {};
@@ -147,7 +179,7 @@ export default class UserController {
       });
 
       if (!user) {
-        status = 401;
+        status = 400;
         throw { message: "User doesn't exist" };
       }
 
@@ -156,7 +188,7 @@ export default class UserController {
       });
 
       if (!contact) {
-        status = 401;
+        status = 400;
         throw { message: "Contact doesn't exist" };
       }
 
@@ -182,6 +214,12 @@ export default class UserController {
     }
     res.status(status).json(body);
   }
+  /**
+   * Accepter une demande d'ami
+   * @param {Request} id de l'utilisateur - id du contact
+   * @param {err} 400 - aucun utilisateur
+   * @param {Response} message
+   */
   static async acceptRequest(req, res) {
     let status = 200;
     let body = {};
@@ -192,7 +230,7 @@ export default class UserController {
       });
 
       if (!user) {
-        status = 401;
+        status = 400;
         throw { message: "User doesn't exist" };
       }
 
@@ -201,7 +239,7 @@ export default class UserController {
       });
 
       if (!contact) {
-        status = 401;
+        status = 400;
         throw { message: "Contact doesn't exist" };
       }
 
@@ -233,6 +271,12 @@ export default class UserController {
     }
     res.status(status).json(body);
   }
+  /**
+   * Supprimer un ami
+   * @param {Request} id de l'utilisateur - id du contact
+   * @param {err} 400 - aucun utilisateur
+   * @param {Response} message
+   */
   static async deleteContact(req, res) {
     let status = 200;
     let body = {};
@@ -243,7 +287,7 @@ export default class UserController {
       });
 
       if (!user) {
-        status = 401;
+        status = 400;
         throw { message: "User doesn't exist" };
       }
 
@@ -252,7 +296,7 @@ export default class UserController {
       });
 
       if (!contact) {
-        status = 401;
+        status = 400;
         throw { message: "Contact doesn't exist" };
       }
 
@@ -282,6 +326,12 @@ export default class UserController {
     }
     res.status(status).json(body);
   }
+  /**
+   * Modifier les données d'un utilisateur
+   * @param {Request} id de l'utilisateur - Données à modifier
+   * @param {err} 400 - aucun utilisateur
+   * @param {Response} message
+   */
   static async update(req, res) {
     let status = 200;
     let body = {};
@@ -296,7 +346,7 @@ export default class UserController {
       ).select('-password');
 
       if (!user) {
-        status = 401;
+        status = 400;
         throw { message: "User doesn't exist" };
       }
       body = { message: 'request finished', user };
@@ -309,6 +359,12 @@ export default class UserController {
     }
     res.status(status).json(body);
   }
+  /**
+   * Supprimer un utilisateur (seulement pour admin)
+   * @param {Request} id de l'utilisateur
+   * @param {err} 400 - aucun utilisateur
+   * @param {Response} message
+   */
   static async delete(req, res) {
     let status = 200;
     let body = {};
@@ -322,7 +378,7 @@ export default class UserController {
       );
 
       if (!user) {
-        status = 401;
+        status = 400;
         throw { message: "User doesn't exist" };
       }
       body = { message: 'request finished', contact };

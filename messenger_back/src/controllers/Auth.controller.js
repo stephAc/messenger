@@ -44,7 +44,7 @@ export default class Auth {
   /**
    * Create user
    * @param {Request} username - email - password
-   * @param {Response} err : 400
+   * @param {err} 400 - message[]
    * @param {Response} message
    */
   static async create(req, res) {
